@@ -1,0 +1,3023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta http-equiv=Content-Type content='text/html; charset=UTF-8'>
+
+
+	<title>Stb &#8211; REDCHINA</title>
+	<script
+		type="application/javascript">var edgtCoreAjaxUrl = "wp-admin/admin-ajax.php.htm"/*tpa=http://demo.va666.com/quadric/wp-admin/admin-ajax.php*/</script>
+	<link rel="alternate" type="application/rss+xml" title="Maker &raquo; Feed"
+		href="http://demo.va666.com/quadric/feed/" />
+	<link rel="alternate" type="application/rss+xml" title="Maker &raquo; 评论Feed"
+		href="http://demo.va666.com/quadric/comments/feed/" />
+	<script type="text/javascript">
+		window._wpemojiSettings = { "baseUrl": "https:\/\/s.w.org\/images\/core\/emoji\/72x72\/", "ext": ".png", "source": { "concatemoji": "http:\/\/demo.va666.com\/quadric\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.4" } };
+		!function (a, b, c) { function d(a) { var c, d, e, f = b.createElement("canvas"), g = f.getContext && f.getContext("2d"), h = String.fromCharCode; return g && g.fillText ? (g.textBaseline = "top", g.font = "600 32px Arial", "flag" === a ? (g.fillText(h(55356, 56806, 55356, 56826), 0, 0), f.toDataURL().length > 3e3) : "diversity" === a ? (g.fillText(h(55356, 57221), 0, 0), c = g.getImageData(16, 16, 1, 1).data, g.fillText(h(55356, 57221, 55356, 57343), 0, 0), c = g.getImageData(16, 16, 1, 1).data, e = c[0] + "," + c[1] + "," + c[2] + "," + c[3], d !== e) : ("simple" === a ? g.fillText(h(55357, 56835), 0, 0) : g.fillText(h(55356, 57135), 0, 0), 0 !== g.getImageData(16, 16, 1, 1).data[0])) : !1 } function e(a) { var c = b.createElement("script"); c.src = a, c.type = "text/javascript", b.getElementsByTagName("head")[0].appendChild(c) } var f, g; c.supports = { simple: d("simple"), flag: d("flag"), unicode8: d("unicode8"), diversity: d("diversity") }, c.DOMReady = !1, c.readyCallback = function () { c.DOMReady = !0 }, c.supports.simple && c.supports.flag && c.supports.unicode8 && c.supports.diversity || (g = function () { c.readyCallback() }, b.addEventListener ? (b.addEventListener("DOMContentLoaded", g, !1), a.addEventListener("load", g, !1)) : (a.attachEvent("onload", g), b.attachEvent("onreadystatechange", function () { "complete" === b.readyState && c.readyCallback() })), f = c.source || {}, f.concatemoji ? e(f.concatemoji) : f.wpemoji && f.twemoji && (e(f.twemoji), e(f.wpemoji))) }(window, document, window._wpemojiSettings);
+	</script>
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+	//重名驗證
+	function cmyz(){   
+		var USERNAME = $("#user").val();
+		$.ajax({
+				type: "POST",
+				url: '/ajaxTest1/ajax2',
+				data: "USERNAME="+USERNAME ,
+				dataType: 'json',
+				cache: false,
+				success:function(data){
+					if("00"==data.result)
+						{
+						alert("chongm");
+						}
+					else{
+						yzuser();
+					    }
+				}
+			});
+				}
+
+		function yzuser()
+		{return weikong("user",/^[-_a-zA-Z0-9]{4,16}$/);}
+	
+		function yzpassword(){
+		return	weikong("password",/^(\w){6,20}$/);
+		}
+		function yzphone(){
+		return	weikong("phone",/^1\d{10}$/);
+		}
+		function yzemail(){
+		return	weikong("email",/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+		}
+		function checkagree(){
+			document.getElementById("zc").disabled=!document.getElementById("agree").checked;
+		}
+		function qrpassword(){
+			var a=document.getElementById("password").value;
+			var b=document.getElementById("password2").value;
+			var span=document.getElementById("password2Span");
+			if(a==b){
+				span.innerHTML="密码一致";
+				return true;
+			}else{
+				span.innerHTML="密码不一致";
+				return false;
+			}	
+		}
+		function xzcity(){
+			var v=document.getElementById("city").value;
+			var span=document.getElementById("citySpan");
+			if(v==0){
+				span.innerHTML="请选择籍贯";
+				return false;
+			}else{
+				span.innerHTML="选择完毕";
+				return true;
+			}
+		}
+		function tijiao(){
+			yzuser();
+			yzpassword();
+			yzphone();
+			yzemail();
+			qrpassword();
+			xzcity();
+			aihao();
+			return yzuser()&&yzpassword()&&qrpassword()&&yzphone()&&yzemail()&&xzcity()&&aihao();
+		}
+		function aihao(){
+			var arr=document.getElementsByName("hobby");
+			var checknum=0;
+			var span=document.getElementById("hobbySpan");
+			for(var i=0;i<arr.length;i++){
+				if(arr[i].checked)
+					checknum++;
+			}
+			if(checknum==0){
+				span.innerHTML="请至少选择一个";
+				return false;
+			}
+			else{
+				span.innerHTML="选择完毕";
+				return true;
+			}
+		}
+		function weikong(a,reg){
+		var v=document.getElementById(a).value;
+		var span=document.getElementById(a+"Span");
+		var alt=document.getElementById(a).alt;
+		if(v==""||v==null){
+		span.innerHTML=alt+"不能为空";
+		return false;
+		}
+		else if(!reg.test(v)){
+			span.innerHTML=alt+"格式不对";
+			return false;
+		}
+		else{
+			span.innerHTML=alt+"可用";
+			return true;
+		}
+	}
+		
+
+		//提交注册
+		function register() {
+
+			if (tijiao()) {
+				
+				var USERNAME = $("#user").val();
+				
+				var PASSWORD = $("#password").val();
+				var SEX = $("#sex").val();
+				var PHONE = $("#phone").val();
+				var EMAIL = $("#email").val();
+				var code2 = USERNAME + "," + PASSWORD + "," + PHONE+ "," + EMAIL;
+				alert(code2);
+				$.ajax({
+					type: "POST",
+					url: '/ajaxTest1/ajaxServelt',
+					data: "code2="+code2 ,
+					dataType: 'json',
+					cache: false,
+					success: function (data) {
+						if ("00" == data.result) {
+							$("#windows2").hide();
+							$("#windows1").show();
+							$("#loginbox").tips({
+								side: 1,
+								msg: '注册成功,请登录',
+								bg: '#68B500',
+								time: 3
+							});
+							changeCode1();
+						} else if ("04" == data.result) {
+							$("#USERNAME").tips({
+								side: 1,
+								msg: "用户名已存在",
+								bg: '#FF5080',
+								time: 15
+							});
+							showfh();
+							$("#USERNAME").focus();
+						}
+					}
+				});
+			}
+		}
+
+
+
+	</script>
+
+
+	<style type="text/css">
+		img.wp-smiley,
+		img.emoji {
+			display: inline !important;
+			border: none !important;
+			box-shadow: none !important;
+			height: 1em !important;
+			width: 1em !important;
+			margin: 0 .07em !important;
+			vertical-align: -0.1em !important;
+			background: none !important;
+			padding: 0 !important;
+		}
+	</style>
+	<link rel='stylesheet' id='contact-form-7-css'
+		href="wp-content/plugins/contact-form-7/includes/css/styles.css-ver=4.4.1.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.4.1"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='rs-plugin-settings-css'
+		href="wp-content/plugins/revslider/public/assets/css/settings.css-ver=5.2.2.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/revslider/public/assets/css/settings.css?ver=5.2.2"
+		type='text/css' media='all' />
+	<style id='rs-plugin-settings-inline-css' type='text/css'>
+		#rs-demo-id {}
+	</style>
+	<link rel='stylesheet' id='edgtf_quadric_default_style-css' href="wp-content/themes/quadric/style.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/style.css?ver=4.4.4" type='text/css'
+		media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_modules_plugins-css'
+		href="wp-content/themes/quadric/assets/css/plugins.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/plugins.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_modules-css'
+		href="wp-content/themes/quadric/assets/css/modules.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/modules.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_font_awesome-css'
+		href="wp-content/themes/quadric/assets/css/font-awesome/css/font-awesome.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/font-awesome/css/font-awesome.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_font_elegant-css'
+		href="wp-content/themes/quadric/assets/css/elegant-icons/style.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/elegant-icons/style.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_ion_icons-css'
+		href="wp-content/themes/quadric/assets/css/ion-icons/css/ionicons.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/ion-icons/css/ionicons.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_linea_icons-css'
+		href="wp-content/themes/quadric/assets/css/linea-icons/style.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/linea-icons/style.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_simple_line_icons-css'
+		href="wp-content/themes/quadric/assets/css/simple-line-icons/simple-line-icons.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/simple-line-icons/simple-line-icons.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_dripicons-css'
+		href="wp-content/themes/quadric/assets/css/dripicons/dripicons.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/dripicons/dripicons.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_blog-css'
+		href="wp-content/themes/quadric/assets/css/blog.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/blog.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='mediaelement-css'
+		href="wp-includes/js/mediaelement/mediaelementplayer.min.css-ver=2.18.1.css"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/mediaelement/mediaelementplayer.min.css?ver=2.18.1"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='wp-mediaelement-css' href="wp-includes/js/mediaelement/wp-mediaelement.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/mediaelement/wp-mediaelement.css?ver=4.4.4" type='text/css'
+		media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_woocommerce-css'
+		href="wp-content/themes/quadric/assets/css/woocommerce.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/woocommerce.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_woocommerce_responsive-css'
+		href="wp-content/themes/quadric/assets/css/woocommerce-responsive.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/woocommerce-responsive.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_style_dynamic-css'
+		href="wp-content/themes/quadric/assets/css/style_dynamic.css-ver=1465801550.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/style_dynamic.css?ver=1465801550"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_modules_responsive-css'
+		href="wp-content/themes/quadric/assets/css/modules-responsive.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/modules-responsive.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_blog_responsive-css'
+		href="wp-content/themes/quadric/assets/css/blog-responsive.min.css-ver=4.4.4.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/blog-responsive.min.css?ver=4.4.4"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_quadric_style_dynamic_responsive-css'
+		href="wp-content/themes/quadric/assets/css/style_dynamic_responsive.css-ver=1465801550.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/css/style_dynamic_responsive.css?ver=1465801550"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='js_composer_front-css'
+		href="wp-content/plugins/js_composer/assets/css/js_composer.min.css-ver=4.11.1.css"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=4.11.1"
+		type='text/css' media='all' />
+	<link rel='stylesheet' id='edgtf_google_fonts-css' href="../../fonts.geekzu.org/fi000001.0.css"
+		tppabs="https://fonts.geekzu.org/css?family=Raleway%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7COpen+Sans%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CLato%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&subset=latin%2Clatin-ext&ver=1.0.0"
+		type='text/css' media='all' />
+	<script type='text/javascript' src="wp-includes/js/jquery/jquery.js-ver=1.11.3"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/jquery.js?ver=1.11.3"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/jquery-migrate.min.js-ver=1.2.1"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js-ver=5.2.2"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js?ver=5.2.2"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js-ver=5.2.2"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js?ver=5.2.2"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var wc_add_to_cart_params = { "ajax_url": "http://quadric//wp-admin//admin-ajax.php", "wc_ajax_url": "\/quadric\/?wc-ajax=%%endpoint%%", "i18n_view_cart": "\u67e5\u770b\u8d2d\u7269\u8f66", "cart_url": "http:\/\/demo.va666.com\/quadric\/cart\/", "is_cart": "", "cart_redirect_after_add": "no" };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js-ver=2.5.5"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=2.5.5"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/js_composer/assets/js/vendors/woocommerce-add-to-cart.js-ver=4.11.1"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/js/vendors/woocommerce-add-to-cart.js?ver=4.11.1"></script>
+	<link rel='https://api.w.org/' href='http://demo.va666.com/quadric/wp-json/' />
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://demo.va666.com/quadric/xmlrpc.php?rsd" />
+	<link rel="wlwmanifest" type="application/wlwmanifest+xml"
+		href="http://demo.va666.com/quadric/wp-includes/wlwmanifest.xml" />
+	<meta name="generator" content="WordPress 4.4.4" />
+	<meta name="generator" content="WooCommerce 2.5.5" />
+	<link rel="canonical" href="http://demo.va666.com/quadric/" />
+	<link rel='shortlink' href='http://demo.va666.com/quadric/' />
+	<style type="text/css">
+		/* generated in /home/ftp/c/cloud_wp/wwwroot/quadric/wp-content/themes/quadric/functions.php edgtf_quadric_header_fixed_style function */
+		.page-id-11.edgtf-header-standard .edgtf-fixed-wrapper.fixed .edgtf-menu-area {
+			background-color: rgba(0, 0, 0, 0.85) !important;
+		}
+	</style>
+	<meta name="generator" content="Powered by Visual Composer - drag and drop page builder for WordPress." />
+	<!--[if lte IE 9]><link rel="stylesheet" type="text/css" href="wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css" tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css" media="screen"><![endif]-->
+	<!--[if IE  8]><link rel="stylesheet" type="text/css" href="wp-content/plugins/js_composer/assets/css/vc-ie8.min.css" tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/css/vc-ie8.min.css" media="screen"><![endif]-->
+	<meta name="generator"
+		content="Powered by Slider Revolution 5.2.2 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+	<style type="text/css" data-type="vc_shortcodes-custom-css">
+		.vc_custom_1446647207681 {
+			background-color: #ffffff !important;
+		}
+
+		.vc_custom_1444140647755 {
+			background-color: #fb3644 !important;
+		}
+
+		.vc_custom_1444658513013 {
+			padding-top: 82px !important;
+			padding-bottom: 58px !important;
+		}
+
+		.vc_custom_1444381087929 {
+			padding-bottom: 62px !important;
+		}
+
+		.vc_custom_1444317160667 {
+			border-top-width: 1px !important;
+			background-color: #fafafa !important;
+			border-top-color: #e0e0e0 !important;
+			border-top-style: solid !important;
+		}
+
+		.vc_custom_1444380078395 {
+			padding-top: 54px !important;
+			padding-bottom: 54px !important;
+			background-color: #0e1718 !important;
+		}
+
+		.vc_custom_1444223101291 {
+			padding-top: 79px !important;
+			padding-bottom: 92px !important;
+		}
+
+		.vc_custom_1444381484448 {
+			border-top-width: 1px !important;
+			padding-top: 74px !important;
+			padding-bottom: 8px !important;
+			background-color: #fafafa !important;
+			border-top-color: #e0e0e0 !important;
+			border-top-style: solid !important;
+		}
+
+		.vc_custom_1444381536071 {
+			padding-bottom: 37px !important;
+			background-color: #fafafa !important;
+		}
+
+		.vc_custom_1444383922684 {
+			padding-top: 186px !important;
+			padding-bottom: 186px !important;
+		}
+
+		.vc_custom_1444397163088 {
+			padding-top: 79px !important;
+			padding-bottom: 58px !important;
+		}
+
+		.vc_custom_1444139900260 {
+			padding-bottom: 64px !important;
+		}
+
+		.vc_custom_1444141558049 {
+			background-image: url("wp-content/uploads/2015/10/main-home-background-4.jpg-id=314.jpg"
+					/*tpa=http://demo.va666.com/quadric/wp-content/uploads/2015/10/main-home-background-4.jpg?id=314*/
+				) !important;
+		}
+
+		.vc_custom_1445520595693 {
+			border-right-width: 1px !important;
+			border-right-color: rgba(255, 255, 255, 0.09) !important;
+			border-right-style: solid !important;
+		}
+
+		.vc_custom_1445520605371 {
+			border-right-width: 1px !important;
+			border-right-color: rgba(255, 255, 255, 0.09) !important;
+			border-right-style: solid !important;
+		}
+
+		.vc_custom_1445520613679 {
+			border-right-width: 1px !important;
+			border-right-color: rgba(255, 255, 255, 0.09) !important;
+			border-right-style: solid !important;
+		}
+
+		.vc_custom_1445520622557 {
+			border-right-width: 1px !important;
+			border-right-color: rgba(255, 255, 255, 0.09) !important;
+			border-right-style: solid !important;
+		}
+
+		.vc_custom_1445520632325 {
+			border-right-width: 1px !important;
+			border-right-color: rgba(255, 255, 255, 0.09) !important;
+			border-right-style: solid !important;
+		}
+	</style><noscript>
+		<style type="text/css">
+			.wpb_animate_when_almost_visible {
+				opacity: 1;
+			}
+		</style>
+	</noscript>
+</head>
+
+<body
+	class="home page page-id-11 page-template page-template-full-width page-template-full-width-php edgt-core-1.1.1 quadric ������-ver-1.2  edgtf-blog-installed edgtf-header-standard edgtf-fixed-on-scroll edgtf-default-mobile-header edgtf-sticky-up-mobile-header edgtf-light-header edgtf-fullscreen-search edgtf-search-fade edgtf-side-menu-slide-with-content edgtf-width-470 wpb-js-composer js-comp-ver-4.11.1 vc_responsive">
+	<section class="edgtf-side-menu right">
+		<div class="edgtf-close-side-menu-holder">
+			<div class="edgtf-close-side-menu-holder-inner">
+				<a href="#" target="_self" class="edgtf-close-side-menu">
+					<span aria-hidden="true" class="icon_close"></span>
+				</a>
+			</div>
+		</div>
+		<div id="text-7" class="widget edgtf-sidearea widget_text">
+			<div class="textwidget">
+				<div class="edgtf-separator-holder clearfix  edgtf-separator-center edgtf-separator-transparent"
+					style="margin-top: 59px;margin-bottom: 0px">
+					<div class="edgtf-separator"></div>
+				</div>
+
+
+				<a href="javascript:if(confirm('http://quadric.edge-themes.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://quadric.edge-themes.com/'"
+					tppabs="http://quadric.edge-themes.com/"></a><img src="wp-content/uploads/2015/11/quadric-side-area.png"
+						
+						alt="logo" />
+				</a>
+
+				<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-center edgtf-zig-zag-separator-medium edgtf-zig-zag-separator-on"
+					data-svg-drawing="no" data-svg-frames="40" style="margin-top: 29px;margin-bottom: 55px">
+					<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+						x="0px" y="0px" height="14" width="68" viewBox="0 0 69.172 14.975" xml:space="preserve">
+						<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+					</svg>
+				</div>
+			</div>
+		</div>
+		<div id="text-8" class="widget edgtf-sidearea widget_text">
+			<div class="textwidget">
+				<div class="edgtf-separator-holder clearfix  edgtf-separator-center edgtf-separator-transparent"
+					style="margin-top: 44px;margin-bottom: 0px">
+					<div class="edgtf-separator"></div>
+				</div>
+
+
+
+
+				<h2><span style="color: #7f7f7f;"> 登錄 </span></h2>
+				<table align="center" >
+				<tr>
+					<td>用户名<input  type="text" name="user" id="user" onblur="cmyz()" alt="用户名" /></td>
+					<td><span id="userSpan"></span></td>
+				</tr>	
+				<tr>
+					<td>密&nbsp;&nbsp;&nbsp;码<input type="password" name="password" id="password" onblur="yzpassword()" alt="密码" /></td>
+					<td><span id="passwordSpan"></span></td>
+				</tr>
+				<tr>
+					<td>确认密码<input type="password" name="password2" id="password2" onblur="qrpassword()" size="17" /></td>
+					<td><span id="password2Span"></span></td>
+				</tr>
+				<tr>
+					<td>手机号<input type="text" name="phone" id="phone" onblur="yzphone()" alt="手机号" /></td>
+					<td><span id="phoneSpan"></span></td>
+				</tr>
+				<tr>
+					<td>邮&nbsp;&nbsp;&nbsp;箱<input type="text" name="email" id="email" onblur="yzemail()" alt="邮箱" /></td>
+					<td><span id="emailSpan"></span></td>
+				</tr>
+				<tr>
+					<td>籍贯<select id="city" name="city" onchange="xzcity()">
+				<option value="0">请选择</option>
+				<option value="1">北京</option>
+				<option value="2">上海</option>
+				<option value="3">广州</option>
+				<option value="4">深圳</option></select>
+					</td>
+					<td><span id="citySpan"></span></td>
+				</tr>
+				<tr>
+				<td>性别:男<input type="radio" name="sex" checked="checked" />
+				女<input type="radio" name="sex" /></td>
+				</tr>
+				<tr>
+					<td>爱好:睡觉<input type="checkbox" name="hobby"/>
+					看书<input type="checkbox" name="hobby"/>
+					旅游<input type="checkbox" name="hobby"/>
+					</td>
+					<td><span id="hobbySpan"></span></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" id="agree" name="agree" onclick="checkagree()" />是否同意本协议</td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="立即注册" name="zc" id="zc" disabled="disabled" onclick="register()"/></td>
+				</tr>
+			
+
+			
+			</table>
+
+
+
+						
+				
+				<div class="edgtf-separator-holder clearfix  edgtf-separator-center edgtf-separator-transparent"
+					style="margin-top: 20px;margin-bottom: 0px">
+					<div class="edgtf-separator"></div>
+				</div>
+				
+				<div class="login">
+				</div>
+
+
+				
+
+
+
+
+				
+
+
+			</div>
+		</div>
+	</section>
+	<div class="edgtf-wrapper">
+		<div class="edgtf-wrapper-inner">
+			<div class="edgtf-fullscreen-search-holder">
+				<div class="edgtf-fullscreen-search-close-container">
+					<div class="edgtf-search-close-holder">
+						<a class="edgtf-fullscreen-search-close" href="javascript:void(0)">
+							<span class="close">
+								<span class="lines">
+									<span class="line-1"></span>
+									<span class="line-2"></span>
+								</span>
+							</span>
+						</a>
+					</div>
+				</div>
+				<div class="edgtf-fullscreen-search-table">
+					<div class="edgtf-fullscreen-search-cell">
+						<div class="edgtf-fullscreen-search-inner">
+							<form action="http://demo.va666.com/quadric/" class="edgtf-fullscreen-search-form"
+								method="get">
+								<div class="edgtf-form-holder">
+									<div class="edgtf-field-holder">
+										<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-left edgtf-zig-zag-separator-medium edgtf-zig-zag-separator-on"
+											data-svg-drawing="no" data-svg-frames="40">
+											<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+												xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="14"
+												width="68" viewBox="0 0 69.172 14.975" xml:space="preserve">
+												<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+											</svg>
+										</div>
+										<input type="text" name="s" placeholder="搜索" class="edgtf-search-field"
+											autocomplete="off" />
+										<input type="submit" class="edgtf-search-submit" value="&#xf002;" />
+										<div class="edgtf-line"></div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<header class="edgtf-page-header">
+				<div class="edgtf-fixed-wrapper">
+					<div class="edgtf-menu-area"
+						style="background-color:rgba(0, 0, 0, 0.55);border-bottom-color:rgba(252, 252, 252, 0.19)">
+						<div class="edgtf-vertical-align-containers">
+							<div class="edgtf-position-left">
+								<div class="edgtf-position-left-inner">
+
+									<div class="edgtf-logo-wrapper">
+										<a href="index.htm" tppabs="http://demo.va666.com/quadric/"
+											style="height: 17px;">
+											<img class="edgtf-normal-logo"
+												src="wp-content/themes/quadric/assets/img/logo.png"
+												tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/img/logo.png"
+												alt="logo" />
+											<img class="edgtf-dark-logo"
+												src="wp-content/themes/quadric/assets/img/logo_black.png"
+												tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/img/logo_black.png"
+												alt="dark logo" /> <img class="edgtf-light-logo"
+												src="wp-content/themes/quadric/assets/img/logo_white.png"
+												tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/img/logo_white.png"
+												alt="light logo" /> </a>
+									</div>
+
+								</div>
+							</div>
+							<div class="edgtf-position-center">
+								<div class="edgtf-position-center-inner">
+
+									<nav class="edgtf-main-menu edgtf-drop-down edgtf-default-nav">
+										<ul id="menu-main_menu" class="clearfix">
+											<li id="nav-menu-item-4935"
+												class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children edgtf-active-item has_sub narrow">
+												<a href="index.jsp" class=" current "><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">首页</span></span></span><span
+															class="plus"></span></span></a>
+												<div class="second">
+													<div class="inner">
+													</div>
+												</div>
+											</li>
+											<li id="nav-menu-item-5174"
+												class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4769 current_page_item edgtf-active-item narrow">
+												<a href="/2_zh_stb_red/zh_stb_red/intro/HotPaper.jsp" "
+													class=" current "><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">精品文章</span></span></span><span
+															class="plus"></span></span></a></li>
+											
+											<li id="nav-menu-item-4936"
+												class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide wide_columns_4">
+												<a href="#" class=""><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">红色精神</span></span></span><span
+															class="plus"></span></span></a>
+												<div class="second">
+													<div class="inner">
+														<ul>
+															<li id="nav-menu-item-4939"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">革命精神</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5017"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">井冈山精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5016"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">长征精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5020"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">延安精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5014"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">五四精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4940"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">人物精神</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5018"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">雷锋精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5015"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">焦裕禄精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5067"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">刘胡兰精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5013"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">陈家林精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4954"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">新生代</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5012"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">华侨精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5019"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">爱国精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5021"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">文化自信</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4955"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">奥运精神</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5022"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">女排精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5023"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">乒乓精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5024"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="../zh_stb_red/2015/10/11/bold-beautiful/redSoul.jsp"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">男足精神</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li id="nav-menu-item-4937"
+												class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide wide_columns_4">
+												<a href="#" class=""><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">精品红色线路</span></span></span><span
+															class="plus"></span></span></a>
+												<div class="second">
+													<div class="inner">
+														<ul>
+															<li id="nav-menu-item-4960"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">布局样式</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5069"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/standard/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/standard/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">标准布局</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5068"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/standard-wide/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/standard-wide/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">标准全宽</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5057"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/gallery/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">标准相册</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5055"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/gallery-wide/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-wide/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">全宽相册</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5070"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/gallery-joined/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-joined/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">砌块相册</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5056"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="portfolio-layouts/gallery-wide-joined/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-wide-joined/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">全宽砌块</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4961"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">精品红色线路</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5155"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="masonry-layouts/masonry/index.htm"
+																			tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">瀑布间隙</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5156"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="masonry-layouts/masonry-joined/index.htm"
+																			tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-joined/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">砌块连结</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5153"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="masonry-layouts/masonry-wide/index.htm"
+																			tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-wide/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">全宽瀑布</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5154"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="masonry-layouts/masonry-wide-joined/index.htm"
+																			tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-wide-joined/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">砌块连结</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4938"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">悬浮效果</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5058"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="hover-effects/upward/index.htm"
+																			tppabs="http://demo.va666.com/quadric/hover-effects/upward/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">向上</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5059"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="hover-effects/slide-up/index.htm"
+																			tppabs="http://demo.va666.com/quadric/hover-effects/slide-up/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">向上滑动</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5060"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="hover-effects/push/index.htm"
+																			tppabs="http://demo.va666.com/quadric/hover-effects/push/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">推动</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5061"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="hover-effects/shift/index.htm"
+																			tppabs="http://demo.va666.com/quadric/hover-effects/shift/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">转换</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5062"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="hover-effects/image-zooming/index.htm"
+																			tppabs="http://demo.va666.com/quadric/hover-effects/image-zooming/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">图像缩放</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4941"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">作品页面</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-4944"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/fantasy-fire/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/fantasy-fire/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">小图片</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-4947"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/shades-of-green/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/shades-of-green/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">小幻灯</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-4942"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/inspiration/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/inspiration/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">大图片</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-4943"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/vision-logo/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/vision-logo/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">大幻灯</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-4945"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/sketches-and-scribbles/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/sketches-and-scribbles/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">相册</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-4946"
+																		class="menu-item menu-item-type-custom menu-item-object-custom ">
+																		<a href="portfolio-item/going-freelance/index.htm"
+																			tppabs="http://demo.va666.com/quadric/portfolio-item/going-freelance/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">视频</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li id="nav-menu-item-4948"
+												class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub narrow">
+												<a href="/2_zh_stb_red/zh_stb_red/blog-masonry/redT.jsp" class=""><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">红色游记</span></span></span><span
+															class="plus"></span></span></a>
+												
+											</li>
+											<li id="nav-menu-item-4950"
+												class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide wide_columns_4">
+												<a href="#" class=""><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">个人中心</span></span></span><span
+															class="plus"></span></span></a>
+												<div class="second">
+													<div class="inner">
+														<ul>
+															<li id="nav-menu-item-4951"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">醒目元素</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5157"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/floating-slider/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/floating-slider/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">浮动滑块</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5029"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/content-slider/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/content-slider/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">内容滑块</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5037"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/svg-icons/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/svg-icons/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">SVG
+																							图标</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5036"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/revealing-image/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/revealing-image/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">揭示图像</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5043"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/team-slider/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/team-slider/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">团队滑块</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4962"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">交互式</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5039"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/zooming-slider/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/zooming-slider/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">缩放幻灯</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5030"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/icon-slider/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/icon-slider/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">图标幻灯</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5031"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/info-card/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/info-card/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">信息卡片</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5032"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/large-separator/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/large-separator/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">锯齿分隔符</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5042"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/team/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/team/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">团队</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5048"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/testimonials/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/testimonials/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">评价</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5045"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/clients-carousel/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/clients-carousel/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">客户滑块</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4952"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">经典</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5038"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/typography/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/typography/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">字体</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5050"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/accordions/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/accordions/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">手风琴</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5051"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/tabs/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/tabs/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">标签</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5041"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/buttons/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/buttons/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">按钮</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5028"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/call-to-action/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/call-to-action/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">行动召唤</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5046"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/contact-form-7/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/contact-form-7/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">联系表单</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5047"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/google-maps/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/google-maps/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">谷歌地图</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4963"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">图表图形</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5044"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/icon-combinations/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/icon-combinations/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">图标组合</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5034"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/pricing-tables/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/pricing-tables/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">价格</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5035"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/process/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/process/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">流程</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5052"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/progress-bars/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/progress-bars/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">进度条</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5054"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/pie-charts/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/pie-charts/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">饼图</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5053"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/counters/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/counters/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">计数器</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5033"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="elements/lists/index.htm"
+																			tppabs="http://demo.va666.com/quadric/elements/lists/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">列表</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											<li id="nav-menu-item-4953"
+												class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub wide wide_columns_4">
+												<a href="#" class=""><span class="item_outer"><span
+															class="item_inner"><span class="menu_icon_wrapper"><i
+																	class="menu_icon null fa"></i></span><span
+																class="item_text"><span
+																	class="item_title">国货乐园</span></span></span><span
+															class="plus"></span></span></a>
+												<div class="second">
+													<div class="inner">
+														<ul>
+															<li id="nav-menu-item-4956"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">基本页面</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5074"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-home/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-home/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">商店首页</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5040"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">无侧边栏</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5173"
+																		class="menu-item menu-item-type-post_type menu-item-object-product ">
+																		<a href="product/mens-sunglasses/index.htm"
+																			tppabs="http://demo.va666.com/quadric/product/mens-sunglasses/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">商品页面</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5001"
+																		class="menu-item menu-item-type-taxonomy menu-item-object-product_cat ">
+																		<a href="product-category/accessories/index.htm"
+																			tppabs="http://demo.va666.com/quadric/product-category/accessories/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">商品分类</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4957"
+																class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children sub">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">扩展布局</span></span></span><span
+																			class="plus"></span><i
+																			class="edgtf-menu-arrow arrow_carrot-2right"></i></span></a>
+																<ul>
+																	<li id="nav-menu-item-5073"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-two-columns/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-two-columns/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">二列样式</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5066"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-three-columns/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-three-columns/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">三列样式</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5065"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-four-columns/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-four-columns/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">四列样式</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5064"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-four-columns-wide/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-four-columns-wide/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">四列全宽</span></span></span><span
+																					class="plus"></span></span></a></li>
+																	<li id="nav-menu-item-5063"
+																		class="menu-item menu-item-type-post_type menu-item-object-page ">
+																		<a href="shop-five-columns/index.htm"
+																			tppabs="http://demo.va666.com/quadric/shop-five-columns/"
+																			class=""><span class="item_outer"><span
+																					class="item_inner"><span
+																						class="menu_icon_wrapper"><i
+																							class="menu_icon null fa"></i></span><span
+																						class="item_text"><span
+																							class="item_title">五列全宽</span></span></span><span
+																					class="plus"></span></span></a></li>
+																</ul>
+															</li>
+															<li id="nav-menu-item-4958"
+																class="menu-item menu-item-type-custom menu-item-object-custom ">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">热门商品</span></span></span><span
+																			class="plus"></span></span></a>
+																<div class="widget woocommerce widget_products">
+																	<h6>产品</h6>
+																	<ul class="product_list_widget">
+																		<li>
+																			<a href="product/mens-wallet/index.htm"
+																				tppabs="http://demo.va666.com/quadric/product/mens-wallet/"
+																				title="Men&#039;s Wallet">
+																				<img width="180" height="180"
+																					src="wp-content/uploads/2015/10/sh-img-mens-wallet-180x180.jpg"
+																					tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-180x180.jpg"
+																					class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+																					alt="t"
+																					srcset="http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-150x150.jpg 150w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-180x180.jpg 180w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-300x300.jpg 300w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-600x600.jpg 600w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-550x550.jpg 550w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-mens-wallet-1000x1000.jpg 1000w"
+																					sizes="(max-width: 180px) 100vw, 180px" />
+																				<span class="product-title">Men's
+																					Wallet</span>
+																			</a>
+																			<del><span
+																					class="amount">&yen;185.00</span></del>
+																			<ins><span
+																					class="amount">&yen;141.00</span></ins>
+																		</li>
+
+																		<li>
+																			<a href="product/urban-t-shirt/index.htm"
+																				tppabs="http://demo.va666.com/quadric/product/urban-t-shirt/"
+																				title="Urban T-shirt">
+																				<img width="180" height="180"
+																					src="wp-content/uploads/2015/10/sh-img-urban-t-shirt-180x180.jpg"
+																					tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-180x180.jpg"
+																					class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image"
+																					alt="s"
+																					srcset="http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-150x150.jpg 150w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-180x180.jpg 180w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-300x300.jpg 300w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-600x600.jpg 600w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-550x550.jpg 550w, http://demo.va666.com/quadric/wp-content/uploads/2015/10/sh-img-urban-t-shirt-1000x1000.jpg 1000w"
+																					sizes="(max-width: 180px) 100vw, 180px" />
+																				<span class="product-title">Urban
+																					T-shirt</span>
+																			</a>
+																			<span class="amount">&yen;136.00</span></li>
+																	</ul>
+																</div>
+															</li>
+															<li id="nav-menu-item-4959"
+																class="menu-item menu-item-type-custom menu-item-object-custom ">
+																<a href="#" class=""><span class="item_outer"><span
+																			class="item_inner"><span
+																				class="menu_icon_wrapper"><i
+																					class="menu_icon null fa"></i></span><span
+																				class="item_text"><span
+																					class="item_title">最新商品</span></span></span><span
+																			class="plus"></span></span></a>
+																<div class="widget widget_text">
+																	<div class="textwidget"><a href="#"><img
+																				src="wp-content/uploads/2015/10/dropdown-banner.jpg"
+																				tppabs="http://demo.va666.com/quadric//wp-content/uploads/2015/10/dropdown-banner.jpg"
+																				alt="logo" />
+																		</a></div>
+																</div>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</li>
+											
+										</ul>
+									</nav>
+
+								</div>
+							</div>
+							<div class="edgtf-position-right">
+								<div class="edgtf-position-right-inner">
+
+									<a data-icon-close-same-position="yes" class="edgtf-search-opener"
+										href="javascript:void(0)">
+										<i class="edgtf-icon-font-awesome fa fa-search "></i> </a>
+
+									<a class="edgtf-side-menu-button-opener" href="javascript:void(0)">
+										<span class="lines-holder">
+											<span class="first line"></span>
+											<span class="second line"></span>
+											<span class="third line"></span>
+										</span>
+									</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+
+
+			<header class="edgtf-mobile-header">
+				<div class="edgtf-mobile-header-inner">
+					<div class="edgtf-mobile-header-holder">
+						<div class="edgtf-grid">
+							<div class="edgtf-vertical-align-containers">
+								<div class="edgtf-mobile-menu-opener">
+									<a href="javascript:void(0)">
+										<span class="edgtf-mobile-opener-icon-holder">
+											<i class="edgtf-icon-font-awesome fa fa-bars "></i> </span>
+									</a>
+								</div>
+								<div class="edgtf-position-center">
+									<div class="edgtf-position-center-inner">
+
+										<div class="edgtf-mobile-logo-wrapper">
+											<a href="index.htm" tppabs="http://demo.va666.com/quadric/"
+												style="height: 17px">
+												<img src="wp-content/themes/quadric/assets/img/logo.png"
+													tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/img/logo.png"
+													alt="mobile-logo" />
+											</a>
+										</div>
+
+									</div>
+								</div>
+								<div class="edgtf-position-right">
+									<div class="edgtf-position-right-inner">
+
+										<a data-icon-close-same-position="yes" class="edgtf-search-opener"
+											href="javascript:void(0)">
+											<i class="edgtf-icon-font-awesome fa fa-search "></i> </a>
+									</div>
+								</div>
+							</div> <!-- close .edgtf-vertical-align-containers -->
+						</div>
+					</div>
+
+					<nav class="edgtf-mobile-nav">
+						<div class="edgtf-grid">
+							<ul id="menu-main_menu-1" class="">
+								<li id="mobile-menu-item-4935"
+									class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children edgtf-active-item has_sub">
+									<a href="#" class=" current "><span>首页</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-5005"
+											class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-11 current_page_item ">
+											<a href="index.htm" tppabs="http://demo.va666.com/quadric/"
+												class=""><span>经典样式</span></a></li>
+										<li id="mobile-menu-item-5003"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="colorful-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/colorful-home/"
+												class=""><span>丰富多彩</span></a></li>
+										<li id="mobile-menu-item-5008"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="creative-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/creative-home/"
+												class=""><span>高端创意</span></a></li>
+										<li id="mobile-menu-item-5007"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="light-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/light-home/"
+												class=""><span>浅色风格</span></a></li>
+										<li id="mobile-menu-item-5004"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="studio-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/studio-home/"
+												class=""><span>个人设计</span></a></li>
+										<li id="mobile-menu-item-5006"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="office-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/office-home/"
+												class=""><span>企业商务</span></a></li>
+										<li id="mobile-menu-item-5002"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="urban-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/urban-home/"
+												class=""><span>都市风格</span></a></li>
+										<li id="mobile-menu-item-5011"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="business-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/business-home/"
+												class=""><span>商业风格</span></a></li>
+										<li id="mobile-menu-item-5010"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="company-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/company-home/"
+												class=""><span>公司企业</span></a></li>
+										<li id="mobile-menu-item-5009"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="agency-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/agency-home/"
+												class=""><span>创意机构</span></a></li>
+										<li id="mobile-menu-item-5049"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="shop-page/index.htm"
+												tppabs="http://demo.va666.com/quadric/shop-page/"
+												class=""><span>商店风格</span></a></li>
+										<li id="mobile-menu-item-5071"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="dynamic-home/index.htm"
+												tppabs="http://demo.va666.com/quadric/dynamic-home/"
+												class=""><span>动态风格</span></a></li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-5174"
+									class="menu-item menu-item-type-post_type menu-item-object-page "><a
+										href="hotP/HotPaper.jsp" tppabs="http://demo.va666.com/quadric/intro/"
+										class=""><span>Intro</span></a></li>
+								<li id="mobile-menu-item-4936"
+									class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+									<a href="#" class=""><span>页面</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-4939"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>红色人物精神</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5017"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="who-we-are/index.htm"
+														tppabs="http://demo.va666.com/quadric/who-we-are/"
+														class=""><span>雷锋精神</span></a></li>
+												<li id="mobile-menu-item-5016"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="skills-services/index.htm"
+														tppabs="http://demo.va666.com/quadric/skills-services/"
+														class=""><span>技能 &#038; 服务</span></a></li>
+												<li id="mobile-menu-item-5020"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="what-we-do/index.htm"
+														tppabs="http://demo.va666.com/quadric/what-we-do/"
+														class=""><span>焦裕禄</span></a></li>
+												<li id="mobile-menu-item-5014"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="team-member/index.htm"
+														tppabs="http://demo.va666.com/quadric/team-member/"
+														class=""><span>梦想团队</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4940"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>新生代</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5018"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="meet-the-team/index.htm"
+														tppabs="http://demo.va666.com/quadric/meet-the-team/"
+														class=""><span>女排精神</span></a></li>
+												<li id="mobile-menu-item-5015"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="creative-services/index.htm"
+														tppabs="http://demo.va666.com/quadric/creative-services/"
+														class=""><span>创意服务</span></a></li>
+												<li id="mobile-menu-item-5067"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="tour-of-the-office/index.htm"
+														tppabs="http://demo.va666.com/quadric/tour-of-the-office/"
+														class=""><span>办公预览</span></a></li>
+												<li id="mobile-menu-item-5013"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="about-us/index.htm"
+														tppabs="http://demo.va666.com/quadric/about-us/"
+														class=""><span>关于我们</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4954"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>附加页面</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5012"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="a-bit-about-me/index.htm"
+														tppabs="http://demo.va666.com/quadric/a-bit-about-me/"
+														class=""><span>公司总裁</span></a></li>
+												<li id="mobile-menu-item-5019"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="our-process/index.htm"
+														tppabs="http://demo.va666.com/quadric/our-process/"
+														class=""><span>服务流程</span></a></li>
+												<li id="mobile-menu-item-5021"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="faq/index.htm" tppabs="http://demo.va666.com/quadric/faq/"
+														class=""><span>FAQ帮助</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4955"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>联系我们</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5022"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="contact-page-1/index.htm"
+														tppabs="http://demo.va666.com/quadric/contact-page-1/"
+														class=""><span>联系一</span></a></li>
+												<li id="mobile-menu-item-5023"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="contact-page-2/index.htm"
+														tppabs="http://demo.va666.com/quadric/contact-page-2/"
+														class=""><span>联系二</span></a></li>
+												<li id="mobile-menu-item-5024"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="contact-page-3/index.htm"
+														tppabs="http://demo.va666.com/quadric/contact-page-3/"
+														class=""><span>联系三</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-4937"
+									class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+									<a href="#" class=""><span>作品</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-4960"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>布局样式</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5069"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/standard/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/standard/"
+														class=""><span>标准布局</span></a></li>
+												<li id="mobile-menu-item-5068"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/standard-wide/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/standard-wide/"
+														class=""><span>标准全宽</span></a></li>
+												<li id="mobile-menu-item-5057"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/gallery/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery/"
+														class=""><span>标准相册</span></a></li>
+												<li id="mobile-menu-item-5055"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/gallery-wide/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-wide/"
+														class=""><span>全宽相册</span></a></li>
+												<li id="mobile-menu-item-5070"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/gallery-joined/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-joined/"
+														class=""><span>砌块相册</span></a></li>
+												<li id="mobile-menu-item-5056"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="portfolio-layouts/gallery-wide-joined/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-layouts/gallery-wide-joined/"
+														class=""><span>全宽砌块</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4961"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>瀑布样式</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5155"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="masonry-layouts/masonry/index.htm"
+														tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry/"
+														class=""><span>瀑布间隙</span></a></li>
+												<li id="mobile-menu-item-5156"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="masonry-layouts/masonry-joined/index.htm"
+														tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-joined/"
+														class=""><span>砌块连结</span></a></li>
+												<li id="mobile-menu-item-5153"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="masonry-layouts/masonry-wide/index.htm"
+														tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-wide/"
+														class=""><span>全宽瀑布</span></a></li>
+												<li id="mobile-menu-item-5154"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="masonry-layouts/masonry-wide-joined/index.htm"
+														tppabs="http://demo.va666.com/quadric/masonry-layouts/masonry-wide-joined/"
+														class=""><span>砌块连结</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4938"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>悬浮效果</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5058"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="hover-effects/upward/index.htm"
+														tppabs="http://demo.va666.com/quadric/hover-effects/upward/"
+														class=""><span>向上</span></a></li>
+												<li id="mobile-menu-item-5059"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="hover-effects/slide-up/index.htm"
+														tppabs="http://demo.va666.com/quadric/hover-effects/slide-up/"
+														class=""><span>向上滑动</span></a></li>
+												<li id="mobile-menu-item-5060"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="hover-effects/push/index.htm"
+														tppabs="http://demo.va666.com/quadric/hover-effects/push/"
+														class=""><span>推动</span></a></li>
+												<li id="mobile-menu-item-5061"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="hover-effects/shift/index.htm"
+														tppabs="http://demo.va666.com/quadric/hover-effects/shift/"
+														class=""><span>转换</span></a></li>
+												<li id="mobile-menu-item-5062"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="hover-effects/image-zooming/index.htm"
+														tppabs="http://demo.va666.com/quadric/hover-effects/image-zooming/"
+														class=""><span>图像缩放</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4941"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>作品页面</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-4944"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/fantasy-fire/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/fantasy-fire/"
+														class=""><span>小图片</span></a></li>
+												<li id="mobile-menu-item-4947"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/shades-of-green/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/shades-of-green/"
+														class=""><span>小幻灯</span></a></li>
+												<li id="mobile-menu-item-4942"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/inspiration/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/inspiration/"
+														class=""><span>大图片</span></a></li>
+												<li id="mobile-menu-item-4943"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/vision-logo/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/vision-logo/"
+														class=""><span>大幻灯</span></a></li>
+												<li id="mobile-menu-item-4945"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/sketches-and-scribbles/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/sketches-and-scribbles/"
+														class=""><span>相册</span></a></li>
+												<li id="mobile-menu-item-4946"
+													class="menu-item menu-item-type-custom menu-item-object-custom "><a
+														href="portfolio-item/going-freelance/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/going-freelance/"
+														class=""><span>视频</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-4948"
+									class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+									<a href="/2_zh_stb_red/zh_stb_red/blog-masonry/redT.jsp" class=""><span>红色游记</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-5072"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="blog-standard/index.htm"
+												tppabs="http://demo.va666.com/quadric/blog-standard/"
+												class=""><span>标准样式</span></a></li>
+										<li id="mobile-menu-item-5027"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="blog-standard-1/index.htm"
+												tppabs="http://demo.va666.com/quadric/blog-standard-1/"
+												class=""><span>侧边栏</span></a></li>
+										<li id="mobile-menu-item-5025"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="blog-masonry/index.htm"
+												tppabs="http://demo.va666.com/quadric/blog-masonry/"
+												class=""><span>瀑布流</span></a></li>
+										<li id="mobile-menu-item-5026"
+											class="menu-item menu-item-type-post_type menu-item-object-page "><a
+												href="blog-masonry-wide/index.htm"
+												tppabs="http://demo.va666.com/quadric/blog-masonry-wide/"
+												class=""><span>瀑布全宽</span></a></li>
+										<li id="mobile-menu-item-4949"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>文章类型</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5158"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/10/13/type-tips/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/10/13/type-tips/"
+														class=""><span>标准</span></a></li>
+												<li id="mobile-menu-item-5163"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/09/30/dive-into-ux/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/09/30/dive-into-ux/"
+														class=""><span>侧边栏</span></a></li>
+												<li id="mobile-menu-item-5159"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/10/11/bold-beautiful/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/10/11/bold-beautiful/"
+														class=""><span>相册</span></a></li>
+												<li id="mobile-menu-item-5161"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/10/05/stephen-hawking/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/10/05/stephen-hawking/"
+														class=""><span>引用</span></a></li>
+												<li id="mobile-menu-item-5160"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/09/27/team-workflow/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/09/27/team-workflow/"
+														class=""><span>链接</span></a></li>
+												<li id="mobile-menu-item-5162"
+													class="menu-item menu-item-type-post_type menu-item-object-post "><a
+														href="2015/10/02/ambient-music/index.htm"
+														tppabs="http://demo.va666.com/quadric/2015/10/02/ambient-music/"
+														class=""><span>音乐</span></a></li>
+												<li id="mobile-menu-item-5172"
+													class="menu-item menu-item-type-post_type menu-item-object-portfolio-item ">
+													<a href="portfolio-item/going-freelance/index.htm"
+														tppabs="http://demo.va666.com/quadric/portfolio-item/going-freelance/"
+														class=""><span>视频</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-4950"
+									class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+									<a href="#" class=""><span>元素</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-4951"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>醒目元素</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5157"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/floating-slider/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/floating-slider/"
+														class=""><span>浮动滑块</span></a></li>
+												<li id="mobile-menu-item-5029"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/content-slider/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/content-slider/"
+														class=""><span>内容滑块</span></a></li>
+												<li id="mobile-menu-item-5037"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/svg-icons/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/svg-icons/"
+														class=""><span>SVG 图标</span></a></li>
+												<li id="mobile-menu-item-5036"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/revealing-image/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/revealing-image/"
+														class=""><span>揭示图像</span></a></li>
+												<li id="mobile-menu-item-5043"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/team-slider/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/team-slider/"
+														class=""><span>团队滑块</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4962"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>交互式</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5039"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/zooming-slider/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/zooming-slider/"
+														class=""><span>缩放幻灯</span></a></li>
+												<li id="mobile-menu-item-5030"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/icon-slider/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/icon-slider/"
+														class=""><span>图标幻灯</span></a></li>
+												<li id="mobile-menu-item-5031"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/info-card/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/info-card/"
+														class=""><span>信息卡片</span></a></li>
+												<li id="mobile-menu-item-5032"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/large-separator/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/large-separator/"
+														class=""><span>锯齿分隔符</span></a></li>
+												<li id="mobile-menu-item-5042"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/team/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/team/"
+														class=""><span>团队</span></a></li>
+												<li id="mobile-menu-item-5048"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/testimonials/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/testimonials/"
+														class=""><span>评价</span></a></li>
+												<li id="mobile-menu-item-5045"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/clients-carousel/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/clients-carousel/"
+														class=""><span>客户滑块</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4952"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>经典</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5038"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/typography/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/typography/"
+														class=""><span>字体</span></a></li>
+												<li id="mobile-menu-item-5050"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/accordions/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/accordions/"
+														class=""><span>手风琴</span></a></li>
+												<li id="mobile-menu-item-5051"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/tabs/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/tabs/"
+														class=""><span>标签</span></a></li>
+												<li id="mobile-menu-item-5041"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/buttons/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/buttons/"
+														class=""><span>按钮</span></a></li>
+												<li id="mobile-menu-item-5028"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/call-to-action/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/call-to-action/"
+														class=""><span>行动召唤</span></a></li>
+												<li id="mobile-menu-item-5046"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/contact-form-7/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/contact-form-7/"
+														class=""><span>联系表单</span></a></li>
+												<li id="mobile-menu-item-5047"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/google-maps/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/google-maps/"
+														class=""><span>谷歌地图</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4963"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>图表图形</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5044"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/icon-combinations/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/icon-combinations/"
+														class=""><span>图标组合</span></a></li>
+												<li id="mobile-menu-item-5034"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/pricing-tables/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/pricing-tables/"
+														class=""><span>价格</span></a></li>
+												<li id="mobile-menu-item-5035"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/process/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/process/"
+														class=""><span>流程</span></a></li>
+												<li id="mobile-menu-item-5052"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/progress-bars/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/progress-bars/"
+														class=""><span>进度条</span></a></li>
+												<li id="mobile-menu-item-5054"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/pie-charts/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/pie-charts/"
+														class=""><span>饼图</span></a></li>
+												<li id="mobile-menu-item-5053"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/counters/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/counters/"
+														class=""><span>计数器</span></a></li>
+												<li id="mobile-menu-item-5033"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="elements/lists/index.htm"
+														tppabs="http://demo.va666.com/quadric/elements/lists/"
+														class=""><span>列表</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-4953"
+									class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+									<a href="#" class=""><span>商店</span></a><span class="mobile_arrow"><i
+											class="edgtf-sub-arrow fa fa-angle-right"></i><i
+											class="fa fa-angle-down"></i></span>
+									<ul class="sub_menu">
+										<li id="mobile-menu-item-4956"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>基本页面</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5074"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-home/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-home/"
+														class=""><span>商店首页</span></a></li>
+												<li id="mobile-menu-item-5040"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop/"
+														class=""><span>无侧边栏</span></a></li>
+												<li id="mobile-menu-item-5173"
+													class="menu-item menu-item-type-post_type menu-item-object-product ">
+													<a href="product/mens-sunglasses/index.htm"
+														tppabs="http://demo.va666.com/quadric/product/mens-sunglasses/"
+														class=""><span>商品页面</span></a></li>
+												<li id="mobile-menu-item-5001"
+													class="menu-item menu-item-type-taxonomy menu-item-object-product_cat ">
+													<a href="product-category/accessories/index.htm"
+														tppabs="http://demo.va666.com/quadric/product-category/accessories/"
+														class=""><span>商品分类</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4957"
+											class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children  has_sub">
+											<a href="#" class=""><span>扩展布局</span></a><span class="mobile_arrow"><i
+													class="edgtf-sub-arrow fa fa-angle-right"></i><i
+													class="fa fa-angle-down"></i></span>
+											<ul class="sub_menu">
+												<li id="mobile-menu-item-5073"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-two-columns/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-two-columns/"
+														class=""><span>二列样式</span></a></li>
+												<li id="mobile-menu-item-5066"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-three-columns/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-three-columns/"
+														class=""><span>三列样式</span></a></li>
+												<li id="mobile-menu-item-5065"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-four-columns/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-four-columns/"
+														class=""><span>四列样式</span></a></li>
+												<li id="mobile-menu-item-5064"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-four-columns-wide/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-four-columns-wide/"
+														class=""><span>四列全宽</span></a></li>
+												<li id="mobile-menu-item-5063"
+													class="menu-item menu-item-type-post_type menu-item-object-page "><a
+														href="shop-five-columns/index.htm"
+														tppabs="http://demo.va666.com/quadric/shop-five-columns/"
+														class=""><span>五列全宽</span></a></li>
+											</ul>
+										</li>
+										<li id="mobile-menu-item-4958"
+											class="menu-item menu-item-type-custom menu-item-object-custom "><a href="#"
+												class=""><span>热门商品</span></a></li>
+										<li id="mobile-menu-item-4959"
+											class="menu-item menu-item-type-custom menu-item-object-custom "><a href="#"
+												class=""><span>最新商品</span></a></li>
+									</ul>
+								</li>
+								<li id="mobile-menu-item-5251"
+									class="menu-item menu-item-type-custom menu-item-object-custom "><a
+										href="javascript:if(confirm('http://www.22vd.com/10476.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.22vd.com/10476.html'"
+										tppabs="http://www.22vd.com/10476.html" class=""><span>购买主题</span></a></li>
+							</ul>
+						</div>
+					</nav>
+
+				</div>
+			</header> <!-- close .edgtf-mobile-header -->
+
+
+
+			<a id='edgtf-back-to-top' href='#'>
+				<span class="edgtf-icon-stack">
+					<span aria-hidden="true" class="edgtf-icon-font-elegant arrow_carrot-up  "></span> </span>
+				<span class="edgtf-back-to-top-icon-hover">
+					<span aria-hidden="true" class="edgtf-icon-font-elegant arrow_carrot-up  "></span> </span>
+			</a>
+
+			<div class="edgtf-content" style="margin-top: -60px">
+				<div class="edgtf-content-inner">
+					<div class="edgtf-slider">
+						<div class="edgtf-slider-inner">
+							<div id="edgtf-main-home"
+								data-edgtf_responsive_graphic_coefficients="1,1,0.8,0.7,0.6,0.5,0.4"
+								data-edgtf_responsive_title_coefficients="1,1,0.8,0.7,0.6,0.5,0.4"
+								data-edgtf_responsive_subtitle_coefficients="1,1,0.8,0.7,0.6,0.5,0.4"
+								data-edgtf_responsive_text_coefficients="1,1,0.8,0.7,0.6,0.5,0.4"
+								data-edgtf_responsive_button_coefficients="1,1,0.8,0.7,0.6,0.5,0.4"
+								class="carousel slide  edgtf-full-screen   edgtf-auto-start    "
+								data-slide_animation_timeout="6000" data-parallax="yes">
+								<div class="edgtf-slider-preloader">
+									<div class="edgtf-st-loader">
+										<div class="edgtf-st-loader1">
+											<div class="cube"></div>
+										</div>
+									</div>
+								</div>
+								<div class="carousel-inner " style="height: 100%"
+									data-start="transform: translateY(0px);" data-1440="transform: translateY(-500px);">
+									<div class="item  edgtf-has-thumbnail edgtf-content-vertical-middle  "
+										style=" padding-top: 60px;">
+										<div class="edgtf-image"
+											style="background-image:url(../zh_stb_red/img/index/index2.jpg)">
+											<img src="../zh_stb_red/img/index/index2.jpg"
+												alt="Welcome To Maker Cloud"></div>
+										<div class="edgtf-slider-content-outer">
+											<div class="edgtf-slider-content left" data-0=" opacity: 1;   "
+												data-300=" opacity: 0;  ">
+												<div class="edgtf-slider-content-inner one_by_one from_bottom">
+													<div style="padding-bottom: 9px;">
+														<div class="edgtf-thumb flip"><img data-width="185"
+																data-height="38"
+																src="wp-content/uploads/2015/10/zigzag.png"
+																tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/zigzag.png"
+																alt="Welcome To Maker Cloud"></div>
+													</div>
+													<div class="edgtf-text one_by_one from_bottom " style="">
+														<div class="edgtf-el">
+															<h2 class="edgtf-slide-title"><span>Welcome To Maker
+																	Cloud</span></h2>
+														</div>
+														<div class="edgtf-el">
+															<h3 class="edgtf-slide-text">
+																<span>创客云承接WordPress主题安装调试，汉化优化深度汉化翻译，仿站开发等一切企业网站建设服务！
+																	<br /> 创客云世界顶级主题作品交易市场</span></h3>
+														</div>
+														<div class="edgtf-el">
+															<div class="edgtf-slide-buttons-holder"><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-outline-white edgtf-btn-icon"
+																	href="javascript:if(confirm('http://www.22vd.com/10476.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.22vd.com/10476.html'"
+																	tppabs="http://www.22vd.com/10476.html"
+																	target="_blank"><span
+																		class="edgtf-btn-text">购买主题</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-solid edgtf-btn-icon"
+																	href="javascript:if(confirm('http://www.va666.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.va666.com/'"
+																	tppabs="http://www.va666.com/" target="_blank"><span
+																		class="edgtf-btn-text">创客官网</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="item  edgtf-has-thumbnail edgtf-content-vertical-middle  "
+										style=" padding-top: 60px;">
+										<div class="edgtf-image"
+											style="background-image:url(../zh_stb_red/img/index/index3.jpg)">
+											<img src="../zh_stb_red/img/index/index3.jpg"
+												alt="EnterA New Reality"></div>
+										<div class="edgtf-slider-content-outer">
+											<div class="edgtf-slider-content left" data-0=" opacity: 1;   "
+												data-300=" opacity: 0;  ">
+												<div class="edgtf-slider-content-inner one_by_one from_bottom">
+													<div style="padding-bottom: 9px;">
+														<div class="edgtf-thumb flip"><img data-width="185"
+																data-height="38"
+																src="wp-content/uploads/2015/10/zigzag.png"
+																tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/zigzag.png"
+																alt="EnterA New Reality"></div>
+													</div>
+													<div class="edgtf-text one_by_one from_bottom " style="">
+														<div class="edgtf-el">
+															<h2 class="edgtf-slide-title"><span>EnterA New
+																	Reality</span></h2>
+														</div>
+														<div class="edgtf-el">
+															<h3 class="edgtf-slide-text"><span>There are no limits with
+																	the Quadric theme. Fast, powerful, and easy-to-use,
+																	<br /> Quadric lets you feel the full power of
+																	creation.</span></h3>
+														</div>
+														<div class="edgtf-el">
+															<div class="edgtf-slide-buttons-holder"><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-outline-white edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">See more</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-solid edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">Purchase</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="item  edgtf-has-thumbnail edgtf-content-vertical-middle  "
+										style=" padding-top: 60px;">
+										<div class="edgtf-image"
+											style="background-image:url(../zh_stb_red/img/index/index1.jpg)">
+											<img src="../zh_stb_red/img/index/index1.jpg"
+												
+												alt="Take ControlCreate Beauty"></div>
+										<div class="edgtf-slider-content-outer">
+											<div class="edgtf-slider-content left" data-0=" opacity: 1;   "
+												data-300=" opacity: 0;  ">
+												<div class="edgtf-slider-content-inner one_by_one from_bottom">
+													<div style="padding-bottom: 9px;">
+														<div class="edgtf-thumb flip"><img data-width="185"
+																data-height="38"
+																src="wp-content/uploads/2015/10/zigzag.png"
+																tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/zigzag.png"
+																alt="Take ControlCreate Beauty"></div>
+													</div>
+													<div class="edgtf-text one_by_one from_bottom " style="">
+														<div class="edgtf-el">
+															<h2 class="edgtf-slide-title"><span>Take ControlCreate
+																	Beauty</span></h2>
+														</div>
+														<div class="edgtf-el">
+															<h3 class="edgtf-slide-text"><span>There are no limits with
+																	the Quadric theme. Fast, powerful, and easy-to-use,
+																	<br /> Quadric lets you feel the full power of
+																	creation.</span></h3>
+														</div>
+														<div class="edgtf-el">
+															<div class="edgtf-slide-buttons-holder"><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-outline-white edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">See more</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-solid edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">Purchase</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="item  edgtf-has-thumbnail edgtf-content-vertical-middle  "
+										style=" padding-top: 60px;">
+										<div class="edgtf-image"
+											style="background-image:url(../zh_stb_red/img/index/index4.jpg)">
+											<img src="../zh_stb_red/img/index/index4.jpg"
+												alt="A GlanceIntoThe Future"></div>
+										<div class="edgtf-slider-content-outer">
+											<div class="edgtf-slider-content left" data-0=" opacity: 1;   "
+												data-300=" opacity: 0;  ">
+												<div class="edgtf-slider-content-inner one_by_one from_bottom">
+													<div style="padding-bottom: 9px;">
+														<div class="edgtf-thumb flip"><img data-width="185"
+																data-height="38"
+																src="wp-content/uploads/2015/10/zigzag.png"
+																tppabs="http://demo.va666.com/quadric/wp-content/uploads/2015/10/zigzag.png"
+																alt="A GlanceIntoThe Future"></div>
+													</div>
+													<div class="edgtf-text one_by_one from_bottom " style="">
+														<div class="edgtf-el">
+															<h2 class="edgtf-slide-title"><span>A GlanceIntoThe
+																	Future</span></h2>
+														</div>
+														<div class="edgtf-el">
+															<h3 class="edgtf-slide-text"><span>There are no limits with
+																	the Quadric theme. Fast, powerful, and easy-to-use,
+																	<br /> Quadric lets you feel the full power of
+																	creation.</span></h3>
+														</div>
+														<div class="edgtf-el">
+															<div class="edgtf-slide-buttons-holder"><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-outline-white edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">See more</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a><a
+																	class="edgtf-btn edgtf-btn-medium edgtf-btn-solid edgtf-btn-icon"
+																	href="#" target="_self"><span
+																		class="edgtf-btn-text">Purchase</span><span
+																		aria-hidden="true"
+																		class="edgtf-icon-font-elegant arrow_carrot-2right edgtf-button-icon-holder"></span></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<ol class="carousel-indicators" data-start="opacity: 1;" data-300="opacity:0;">
+									<li data-target="#edgtf-main-home" data-slide-to="0" class="active"></li>
+									<li data-target="#edgtf-main-home" data-slide-to="1"></li>
+									<li data-target="#edgtf-main-home" data-slide-to="2"></li>
+									<li data-target="#edgtf-main-home" data-slide-to="3"></li>
+								</ol>
+								<div class="edgtf-controls-holder"><a class="left carousel-control"
+										style="padding-top: 60px;" href="#edgtf-main-home" data-slide="prev"
+										data-start="opacity: 1;" data-300="opacity:0;"><span class="edgtf-prev-nav"><i
+												class="icon-arrows-left"></i></span></a><a
+										class="right carousel-control" style="padding-top: 60px;"
+										href="#edgtf-main-home" data-slide="next" data-start="opacity: 1;"
+										data-300="opacity:0;"><span class="edgtf-next-nav"><i
+												class="icon-arrows-right"></i></span></a></div>
+							</div>
+						</div>
+					</div>
+
+					
+				</div> <!-- close div.content_inner -->
+			</div> <!-- close div.content -->
+
+			<footer>
+				<div class="edgtf-footer-inner clearfix">
+
+
+					<div class="edgtf-footer-top-holder">
+						<div class="edgtf-footer-top edgtf-footer-top-full">
+							<div class="edgtf-four-columns clearfix">
+								<div class="edgtf-four-columns-inner">
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="text-2" class="widget edgtf-footer-column-1 widget_text">
+												<h3 class="edgtf-footer-widget-title">关于创客云</h3>
+												<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-left edgtf-zig-zag-separator-small edgtf-zig-zag-separator-on"
+													data-svg-drawing="no" data-svg-frames="40">
+													<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														height="12" width="57" viewBox="0 0 69.172 14.975"
+														xml:space="preserve">
+														<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+													</svg>
+												</div>
+												<div class="textwidget">
+													创客云数字市场是一个主题模板/创意作品/数字交易平台，你可以出售最优秀的网页模板和平面设计作品！本站全部主题模板为100%正品模板，支持更新升级！
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="recent-posts-2"
+												class="widget edgtf-footer-column-2 widget_recent_entries">
+												<h3 class="edgtf-footer-widget-title">近期文章</h3>
+												<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-left edgtf-zig-zag-separator-small edgtf-zig-zag-separator-on"
+													data-svg-drawing="no" data-svg-frames="40">
+													<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														height="12" width="57" viewBox="0 0 69.172 14.975"
+														xml:space="preserve">
+														<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+													</svg>
+												</div>
+												<ul>
+													<li>
+														<a href="2015/10/13/type-tips/index.htm"
+															tppabs="http://demo.va666.com/quadric/2015/10/13/type-tips/">Type
+															Tips</a>
+													</li>
+													<li>
+														<a href="2015/10/11/bold-beautiful/index.htm"
+															tppabs="http://demo.va666.com/quadric/2015/10/11/bold-beautiful/">Bold
+															&#038; Beautiful</a>
+													</li>
+													<li>
+														<a href="2015/10/09/natural-art/index.htm"
+															tppabs="http://demo.va666.com/quadric/2015/10/09/natural-art/">Natural
+															Art</a>
+													</li>
+													<li>
+														<a href="2015/10/08/summer-brunch/index.htm"
+															tppabs="http://demo.va666.com/quadric/2015/10/08/summer-brunch/">Summer
+															Brunch</a>
+													</li>
+													<li>
+														<a href="2015/10/05/stephen-hawking/index.htm"
+															tppabs="http://demo.va666.com/quadric/2015/10/05/stephen-hawking/">Stephen
+															Hawking</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="nav_menu-3" class="widget edgtf-footer-column-3 widget_nav_menu">
+												<h3 class="edgtf-footer-widget-title">友情链接</h3>
+												<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-left edgtf-zig-zag-separator-small edgtf-zig-zag-separator-on"
+													data-svg-drawing="no" data-svg-frames="40">
+													<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														height="12" width="57" viewBox="0 0 69.172 14.975"
+														xml:space="preserve">
+														<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+													</svg>
+												</div>
+												<div class="menu-links-container">
+													<ul id="menu-links" class="menu">
+														<li id="menu-item-5246"
+															class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5246">
+															<a href="javascript:if(confirm('http://www.va666.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.va666.com/'"
+																tppabs="http://www.va666.com/">创客设计</a></li>
+														<li id="menu-item-5247"
+															class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5247">
+															<a href="javascript:if(confirm('http://szsc.me/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://szsc.me/'"
+																tppabs="http://szsc.me/">数字市场</a></li>
+														<li id="menu-item-5249"
+															class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5249">
+															<a href="javascript:if(confirm('http://www.va666.com/originality.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.va666.com/originality.html'"
+																tppabs="http://www.va666.com/originality.html">创意模板</a>
+														</li>
+														<li id="menu-item-5248"
+															class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5248">
+															<a href="javascript:if(confirm('http://www.va666.com/originality/case.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.va666.com/originality/case.html'"
+																tppabs="http://www.va666.com/originality/case.html">精选案例</a>
+														</li>
+														<li id="menu-item-5245"
+															class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5245">
+															<a href="javascript:if(confirm('http://www.22vd.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.22vd.com/'"
+																tppabs="http://www.22vd.com/">创客云</a></li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="text-3" class="widget edgtf-footer-column-4 widget_text">
+												<h3 class="edgtf-footer-widget-title">联系我们</h3>
+												<div class="edgtf-zig-zag-separator-holder clearfix edgtf-svg-frames-class edgtf-zig-zag-separator-left edgtf-zig-zag-separator-small edgtf-zig-zag-separator-on"
+													data-svg-drawing="no" data-svg-frames="40">
+													<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+														height="12" width="57" viewBox="0 0 69.172 14.975"
+														xml:space="preserve">
+														<path class="edgtf-zig-zag-separator" d="M1.357,12.26 10.807,2.81 20.328,12.332
+		29.781,2.879 39.223,12.321 48.754,2.79 58.286,12.321 67.815,2.793 " />
+													</svg>
+												</div>
+												<div class="textwidget">
+													<div class="edgtf-icon-list-item  ">
+														<div class="edgtf-icon-list-icon-holder">
+															<div class="edgtf-icon-list-icon-holder-inner clearfix">
+																<i class="edgtf-icon-simple-line-icon icon-home "
+																	style="color:#969696;font-size:17px"></i> </div>
+														</div>
+														<p class="edgtf-icon-list-text"
+															style="color:#969696;font-size:14px"> 4745 Buena Vista
+															Avenue<br /> Roseburg, OR 97470</p>
+													</div>
+													<div class="edgtf-icon-list-item  ">
+														<div class="edgtf-icon-list-icon-holder">
+															<div class="edgtf-icon-list-icon-holder-inner clearfix">
+																<i class="edgtf-icon-simple-line-icon icon-call-end "
+																	style="color:#969696;font-size:17px"></i> </div>
+														</div>
+														<p class="edgtf-icon-list-text"
+															style="color:#969696;font-size:14px"> Phone: 541-672-2831
+														</p>
+													</div>
+													<div class="edgtf-icon-list-item  ">
+														<div class="edgtf-icon-list-icon-holder">
+															<div class="edgtf-icon-list-icon-holder-inner clearfix">
+																<i class="edgtf-icon-simple-line-icon icon-envelope-open "
+																	style="color:#969696;font-size:17px"></i> </div>
+														</div>
+														<p class="edgtf-icon-list-text"
+															style="color:#969696;font-size:14px"> Email: admin@qq.com
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="edgtf-footer-bottom-holder">
+						<div class="edgtf-footer-bottom-holder-inner edgtf-footer-bottom-full">
+							<div class="edgtf-two-columns-50-50 clearfix">
+								<div class="edgtf-two-columns-50-50-inner">
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="text-5" class="widget edgtf-footer-bottom-left widget_text">
+												<div class="textwidget">Copyright 2016 Maker Cloud | 由 <a
+														href="javascript:if(confirm('http://www.22vd.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.22vd.com/'"
+														tppabs="http://www.22vd.com/">创客云</a> 深度汉化驱动！</div>
+											</div>
+										</div>
+									</div>
+									<div class="edgtf-column">
+										<div class="edgtf-column-inner">
+											<div id="text-6" class="widget edgtf-footer-bottom-left widget_text">
+												<div class="textwidget"><span>分享</span>
+													<span class="edgtf-icon-shortcode normal"
+														style="margin: 0 40px 0 40px" data-hover-color="#ffffff"
+														data-color="#969696">
+														<a href="#" target="_blank">
+
+															<i class="edgtf-icon-font-awesome fa fa-weixin edgtf-icon-element"
+																style="color: #969696;font-size:18px"></i>
+														</a>
+													</span>
+
+
+													<span class="edgtf-icon-shortcode normal" style="margin: 0 40px 0 0"
+														data-hover-color="#ffffff" data-color="#969696">
+														<a href="#" target="_blank">
+
+															<i class="edgtf-icon-font-awesome fa fa-qq edgtf-icon-element"
+																style="color: #969696;font-size:18px"></i>
+														</a>
+													</span>
+
+
+													<span class="edgtf-icon-shortcode normal" style="margin: 0 40px 0 0"
+														data-hover-color="#ffffff" data-color="#969696">
+														<a href="#" target="_blank">
+
+															<i class="edgtf-icon-font-awesome fa fa-weibo edgtf-icon-element"
+																style="color: #969696;font-size:18px"></i>
+														</a>
+													</span>
+
+
+													<span class="edgtf-icon-shortcode normal" style="margin: 0 40px 0 0"
+														data-hover-color="#ffffff" data-color="#969696">
+														<a href="#" target="_blank">
+
+															<i class="edgtf-icon-font-awesome fa fa-renren edgtf-icon-element"
+																style="color: #969696;font-size:18px"></i>
+														</a>
+													</span>
+
+
+													<span class="edgtf-icon-shortcode normal" style="margin: 0 40px 0 0"
+														data-hover-color="#ffffff" data-color="#969696">
+														<a href="#" target="_blank">
+
+															<i class="edgtf-icon-font-awesome fa fa-pinterest edgtf-icon-element"
+																style="color: #969696;font-size:18px"></i>
+														</a>
+													</span>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</footer>
+
+		</div> <!-- close div.edgtf-wrapper-inner  -->
+	</div> <!-- close div.edgtf-wrapper -->
+	<script type='text/javascript'
+		src="wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js-ver=3.51.0-2014.06.20"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/contact-form-7/includes/js/jquery.form.min.js?ver=3.51.0-2014.06.20"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var _wpcf7 = { "loaderUrl": "http:\/\/demo.va666.com\/quadric\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif", "recaptchaEmpty": "Please verify that you are not a robot.", "sending": "\u53d1\u9001\u4e2d\u3002\u3002\u3002", "cached": "1" };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-content/plugins/contact-form-7/includes/js/scripts.js-ver=4.4.1"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/contact-form-7/includes/js/scripts.js?ver=4.4.1"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js-ver=2.70"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var woocommerce_params = { "ajax_url": "http://quadric//wp-admin//admin-ajax.php", "wc_ajax_url": "\/quadric\/?wc-ajax=%%endpoint%%" };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js-ver=2.5.5"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=2.5.5"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js-ver=1.4.1"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js?ver=1.4.1"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var wc_cart_fragments_params = { "ajax_url": "http://quadric//wp-admin//admin-ajax.php", "wc_ajax_url": "\/quadric\/?wc-ajax=%%endpoint%%", "fragment_name": "wc_fragments" };
+/* ]]> */
+	</script>
+	<script type='text/javascript'
+		src="wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js-ver=2.5.5"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.5.5"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/core.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/widget.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/tabs.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/tabs.min.js?ver=1.11.4"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/accordion.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/accordion.min.js?ver=1.11.4"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/mouse.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4"></script>
+	<script type='text/javascript' src="wp-includes/js/jquery/ui/slider.min.js-ver=1.11.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/jquery/ui/slider.min.js?ver=1.11.4"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var mejsL10n = { "language": "zh-CN", "strings": { "Close": "\u5173\u95ed", "Fullscreen": "\u5168\u5c4f", "Download File": "\u4e0b\u8f7d\u6587\u4ef6", "Download Video": "\u4e0b\u8f7d\u89c6\u9891", "Play\/Pause": "\u64ad\u653e\/\u6682\u505c", "Mute Toggle": "\u5207\u6362\u9759\u97f3", "None": "\u65e0", "Turn off Fullscreen": "\u5173\u95ed\u5168\u5c4f", "Go Fullscreen": "\u5168\u5c4f", "Unmute": "\u53d6\u6d88\u9759\u97f3", "Mute": "\u9759\u97f3", "Captions\/Subtitles": "\u5b57\u5e55" } };
+		var _wpmejsSettings = { "pluginPath": "\/quadric\/wp-includes\/js\/mediaelement\/" };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-includes/js/mediaelement/mediaelement-and-player.min.js-ver=2.18.1-a"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=2.18.1-a"></script>
+	<script type='text/javascript' src="wp-includes/js/mediaelement/wp-mediaelement.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/mediaelement/wp-mediaelement.js?ver=4.4.4"></script>
+	<script type='text/javascript' src="wp-content/themes/quadric/assets/js/third-party.min.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/js/third-party.min.js?ver=4.4.4"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/js_composer/assets/lib/bower/isotope/dist/isotope.pkgd.min.js-ver=4.11.1"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/lib/bower/isotope/dist/isotope.pkgd.min.js?ver=4.11.1"></script>
+	<script type='text/javascript' src="../../ditu.google.cn/maps/api/js-ver=4.4.4"
+		tppabs="http://ditu.google.cn/maps/api/js?ver=4.4.4"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var edgtfQuadricGlobalVars = { "vars": { "edgtfAddForAdminBar": 0, "edgtfElementAppearAmount": -150, "edgtfFinishedMessage": "\u6ca1\u6709\u66f4\u591a\u5185\u5bb9", "edgtfMessage": "\u52a0\u8f7d\u65b0\u6587\u7ae0...", "edgtfTopBarHeight": 0, "edgtfStickyHeaderHeight": 0, "edgtfStickyHeaderTransparencyHeight": 60, "edgtfLogoAreaHeight": 0, "edgtfMenuAreaHeight": 60, "edgtfMobileHeaderHeight": 100 } };
+		var edgtfPerPageVars = { "vars": { "edgtfStickyScrollAmount": 0, "edgtfHeaderTransparencyHeight": 60 } };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-content/themes/quadric/assets/js/modules.min.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/js/modules.min.js?ver=4.4.4"></script>
+	<script type='text/javascript' src="wp-content/themes/quadric/assets/js/blog.min.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/js/blog.min.js?ver=4.4.4"></script>
+	<script type='text/javascript' src="wp-includes/js/comment-reply.min.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/comment-reply.min.js?ver=4.4.4"></script>
+	<script type='text/javascript'
+		src="wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js-ver=4.11.1"
+		tppabs="http://demo.va666.com/quadric/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js?ver=4.11.1"></script>
+	<script type='text/javascript'>
+		/* <![CDATA[ */
+		var edgtfLike = { "ajaxurl": "http:\/\/demo.va666.com\/quadric\/wp-admin\/admin-ajax.php" };
+/* ]]> */
+	</script>
+	<script type='text/javascript' src="wp-content/themes/quadric/assets/js/like.js-ver=1.0"
+		tppabs="http://demo.va666.com/quadric/wp-content/themes/quadric/assets/js/like.js?ver=1.0"></script>
+	<script type='text/javascript' src="wp-includes/js/wp-embed.min.js-ver=4.4.4"
+		tppabs="http://demo.va666.com/quadric/wp-includes/js/wp-embed.min.js?ver=4.4.4"></script>
+</body>
+
+</html>
